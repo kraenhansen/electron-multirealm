@@ -1,0 +1,11 @@
+{
+  "name": "electron-multirealm-realm-5",
+  "version": "0.1.0",
+  "description": "This package uses Realm JS 5",
+  "main": "index.js",
+  "author": "Kræn Hansen",
+  "dependencies": {
+    "realm": "^5.0.5"
+  }
+}
+ 

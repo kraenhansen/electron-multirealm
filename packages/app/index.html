@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Electron Multirealm</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <script>
+      const { remote: { dialog } } = require("electron");
+      const Realm = {
+        5: require("electron-multirealm-realm-5"),
+        6: require("electron-multirealm-realm-6"),
+        10: require("electron-multirealm-realm-10"),
+      };
+
+      function openRealm(version) {
+        const paths = dialog.showOpenDialog({ properties: ['openFile'] });
+        if (paths && paths.length === 1) {
+          const path = paths[0];
+          const realm = Realm[version].openRealm(path);
+          const serializedSchema = JSON.stringify(realm.schema, null, 2);
+          alert(serializedSchema);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Electron Multirealm</h1>
+    <p>Open a Realm file, using:</p>
+    <div>
+        <button onclick="openRealm(5)">Realm JS v5</button>
+        <button onclick="openRealm(6)">Realm JS v6</button>
+        <button onclick="openRealm(10)">Realm JS v10</button>
+    </div>
+    <small>
+        We are using node <script>document.write(process.versions.node)</script>,
+        Chrome <script>document.write(process.versions.chrome)</script>,
+        and Electron <script>document.write(process.versions.electron)</script>.
+    </small>
+  </body>
+</html>

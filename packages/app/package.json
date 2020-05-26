@@ -1,0 +1,20 @@
+{
+  "name": "electron-multirealm-app",
+  "version": "0.1.0",
+  "description": "An app using multiple versions of Realm JS",
+  "main": "index.js",
+  "author": "Kræn Hansen",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder --dir"
+  },
+  "dependencies": {
+    "electron-multirealm-realm-10": "^0.1.0",
+    "electron-multirealm-realm-5": "^0.1.0",
+    "electron-multirealm-realm-6": "^0.1.0"
+  },
+  "devDependencies": {
+    "electron": "^4.2.12",
+    "electron-builder": "^22.6.1"
+  }
+}
