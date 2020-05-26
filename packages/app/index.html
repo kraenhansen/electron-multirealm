@@ -14,12 +14,30 @@
       };
 
       function openRealm(version) {
+        const consoleElement = document.getElementById("console");
+        const controlsElement = document.getElementById("controls");
         const paths = dialog.showOpenDialog({ properties: ['openFile'] });
         if (paths && paths.length === 1) {
           const path = paths[0];
-          const realm = Realm[version].openRealm(path);
-          const serializedSchema = JSON.stringify(realm.schema, null, 2);
-          alert(serializedSchema);
+          try {
+            const realm = Realm[version].openRealm(path);
+            // Display the schema in the console
+            const serializedSchema = JSON.stringify(realm.schema, null, 2);
+            consoleElement.innerText = serializedSchema;
+            // Create a button to close the Realm
+            const closeButton = document.createElement("button");
+            closeButton.innerText = "Close Realm";
+            closeButton.addEventListener("click", () => {
+              // Close the Realm, clear the console and remove the button
+              realm.close();
+              consoleElement.innerText = "";
+              controlsElement.removeChild(closeButton);
+            });
+            controlsElement.appendChild(closeButton);
+          } catch (err) {
+            // Show any error message in the console
+            consoleElement.innerText = err.message;
+          }
         }
       }
     </script>
@@ -27,11 +45,14 @@
   <body>
     <h1>Electron Multirealm</h1>
     <p>Open a Realm file, using:</p>
-    <div>
+    <div id="controls">
         <button onclick="openRealm(5)">Realm JS v5</button>
         <button onclick="openRealm(6)">Realm JS v6</button>
         <button onclick="openRealm(10)">Realm JS v10</button>
     </div>
+    <hr />
+    <pre id="console">...</pre>
+    <hr />
     <small>
         We are using node <script>document.write(process.versions.node)</script>,
         Chrome <script>document.write(process.versions.chrome)</script>,

@@ -1,6 +1,10 @@
 {
   "name": "electron-multirealm",
+  "description": "A project testing requiring multiple versions of Realm into a single renderer process",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  },
   "devDependencies": {
     "lerna": "^3.22.0"
   }
